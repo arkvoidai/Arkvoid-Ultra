@@ -30,7 +30,8 @@ export default tseslint.config(
     rules: { '@typescript-eslint/no-non-null-assertion': 'off' },
   },
   {
-    files: ['eslint.config.js'],
+    // The asset pipeline is plain Node.js JavaScript, not part of the TS project.
+    files: ['**/*.mjs', 'eslint.config.js'],
     ...tseslint.configs.disableTypeChecked,
   },
 );
