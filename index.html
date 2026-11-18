@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#111814" />
+    <meta
+      name="description"
+      content="ARKVOID — enter the first playable cultivation-world prototype."
+    />
+    <title>ARKVOID — The First Valley</title>
+  </head>
+  <body>
+    <main id="game-root" aria-label="ARKVOID game runtime">
+      <canvas id="game-canvas" aria-label="Three-dimensional ARKVOID game world"></canvas>
+
+      <div id="loading-screen" class="loading-screen" role="status">
+        <div class="loading-mark">A</div>
+        <p class="eyebrow">ARKVOID · WORLD INSTANCE 001</p>
+        <p class="loading-title">Entering the First Valley</p>
+        <div class="loading-track"><span></span></div>
+        <p class="loading-note">Preparing terrain, light and local world state</p>
+      </div>
+
+      <section class="hud-layer" aria-label="Game interface">
+        <header class="topbar">
+          <div class="wordmark"><span class="wordmark-symbol">A</span><span>ARKVOID</span></div>
+          <div class="chapter-label">
+            <span class="live-dot"></span> THE FIRST VALLEY
+            <span class="chapter-divider">/</span> ACT I
+          </div>
+          <div class="world-clock">WORLD INSTANCE · 001</div>
+        </header>
+
+        <aside class="quest-panel">
+          <p class="eyebrow">CURRENT PATH</p>
+          <h1 id="objective-title">A Breath Before the Mountain</h1>
+          <p id="objective-copy">
+            Reach the stone altar and attune to the valley's spiritual current.
+          </p>
+          <div class="objective-divider"></div>
+          <p class="micro-label">FIELD NOTE</p>
+          <p class="field-note" id="field-note">
+            Qi motes gather along old paths. Move close to absorb them.
+          </p>
+        </aside>
+
+        <aside class="cultivation-panel">
+          <p class="eyebrow">CULTIVATION</p>
+          <div class="rank-line">
+            <span id="rank-name">Mortal Foundation</span>
+            <span class="rank-mark">境</span>
+          </div>
+          <div class="qi-row"><span>SPIRITUAL QI</span><strong id="qi-value">0 / 30</strong></div>
+          <div class="qi-track"><span id="qi-progress"></span></div>
+          <div class="currency-row">
+            <span>SPIRIT SHARDS</span><strong id="shard-value">0</strong>
+          </div>
+        </aside>
+
+        <div class="interaction-prompt" id="interaction-prompt" aria-live="polite"></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+        <div class="bottom-left">
+          <div class="status-chip">
+            <span class="status-pip"></span><span id="runtime-status">WORLD READY</span>
+          </div>
+          <div class="fps-readout" id="fps-readout">-- FPS</div>
+        </div>
+
+        <div class="desktop-hint">
+          WASD MOVE <span>·</span> DRAG LOOK <span>·</span> SHIFT SPRINT <span>·</span> E INTERACT
+          <span>·</span> J ATTACK
+        </div>
+
+        <div class="mobile-controls" aria-label="Touch controls">
+          <div class="move-pad" aria-label="Movement">
+            <button class="move-up" data-control="forward" aria-label="Move forward">▲</button>
+            <button class="move-left" data-control="left" aria-label="Move left">◀</button>
+            <button class="move-down" data-control="backward" aria-label="Move backward">▼</button>
+            <button class="move-right" data-control="right" aria-label="Move right">▶</button>
+          </div>
+          <div class="action-pad">
+            <button class="action-button" data-control="sprint" aria-label="Hold to sprint">
+              RUN
+            </button>
+            <button class="action-button" data-action="jump" aria-label="Jump">JUMP</button>
+            <button class="action-button action-primary" data-action="attack" aria-label="Attack">
+              STRIKE
+            </button>
+            <button
+              class="action-button action-interact"
+              data-action="interact"
+              aria-label="Interact"
+            >
+              ATTUNE
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="fatal-error" class="fatal-error" hidden role="alert">
+        <p class="eyebrow">RUNTIME INITIALISATION FAILED</p>
+        <h1>The world could not be opened.</h1>
+        <p id="fatal-error-copy">Your browser may not support the required WebGL features.</p>
+        <p class="error-footnote">
+          No gameplay state was changed. Check the browser console for technical details.
+        </p>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
