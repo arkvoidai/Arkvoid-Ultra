@@ -1,44 +1,9 @@
 # ARKVOID Intellectual Property Policy
 
-## Originality requirement
-
-ARKVOID may be inspired by broad genre traditions: cultivation progression, sect politics, martial arts, spirit beasts, ancient mountain settlements, mythic geography and long-form character growth.
-
-It must create its own expression.
-
-Do not copy or closely recreate:
-
-- Protected characters, character names or distinctive costume designs.
-- Fictional faction or sect names that identify another work.
-- Maps, recognisable world layouts or signature landmarks.
-- Dialogue, lore passages, plot sequences or chapter structure.
-- Distinctive creature designs, weapon silhouettes or UI treatments.
-- Commercial game models, textures, animation clips, sound recordings or extracted assets.
-
-A genre convention is not a licence to copy a specific expression.
-
-## Asset provenance
-
-Before an asset enters the repository or shipped build, record:
-
-- Asset identifier and file path.
-- Creator or supplier.
-- Original source URL or purchase record reference.
-- Licence and permitted use, including commercial redistribution.
-- Attribution requirement.
-- Acquisition date.
-- Changes made and responsible contributor.
-
-No unknown-origin asset may ship.
-
-## Code and third-party material
-
-- Preserve required notices and licence files.
-- Review code licences before copying snippets or vendoring dependencies.
-- Keep dependency licences available in release artefacts.
-- Do not place secrets, private credentials or personal information in the repository.
-- Do not commit generative-model output unless its provenance and usage rights have been reviewed.
-
-## Review gate
-
-The production owner must resolve unclear ownership or licence terms before release. An asset-register entry is mandatory; “found online” is not acceptable.
+1. ARKVOID content is original. No characters, names, places, logos, music, or art from existing franchises. "Inspired by genre tradition" never means copying specific designs.
+2. Every asset (model, texture, audio, font, icon) must have a row in `docs/production/ASSET_REGISTER.md` before merge: path, author/source, licence, date, modifications.
+3. Allowed licences: created in-house, CC0, CC-BY (with attribution recorded), or commercially licensed with receipt on file. Disallowed: unknown provenance, "free for personal use", scraped assets.
+4. AI-generated assets are recorded with tool, prompt summary and date, and must pass originality review (no recognisable existing IP).
+5. Third-party npm dependencies must use permissive licences (MIT, Apache-2.0, BSD, ISC). Record in `TECHNOLOGY_DECISIONS.md`.
+7. Reference images (including images supplied by the project owner and AI-generated concepts) are Category A or D in `docs/art-bible/REFERENCE_REGISTER.md`. They are never shipped, traced, projected or used to derive production textures or models.
+6. Procedurally generated content in the repo (terrain, blockout geometry) is in-house and needs no register row.

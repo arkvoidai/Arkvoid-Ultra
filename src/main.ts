@@ -1,34 +1,33 @@
-import './styles/game.css';
-import { GameRuntime } from './game/GameRuntime';
-import { InputManager } from './game/input/InputManager';
-import { GameHud } from './ui/GameHud';
+import './ui/styles.css';
+import { createLogger, installGlobalErrorHandlers } from './core/logger';
+import { Game } from './game/game';
+import { Overlay } from './ui/hud';
 
-const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
+const log = createLogger('boot');
 
-if (!canvas) {
-  throw new Error('ARKVOID runtime canvas was not found.');
+function boot(): void {
+  const root = document.getElementById('app');
+  if (!root) throw new Error('Missing #app element');
+  root.style.position = 'relative';
+
+  const overlay = new Overlay(root, 'ARKVOID');
+  installGlobalErrorHandlers((message) => {
+    overlay.showFatal(message);
+  });
+
+  void (async () => {
+    try {
+      const game = new Game(root);
+      await game.init();
+      game.start();
+      overlay.hide();
+      log.info('Game started');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      log.error('Boot failed', error);
+      overlay.showFatal(message);
+    }
+  })();
 }
 
-let runtime: GameRuntime | undefined;
-let input: InputManager | undefined;
-
-try {
-  input = new InputManager(canvas);
-  const hud = new GameHud(input);
-  runtime = new GameRuntime(canvas, input, hud);
-  runtime.start();
-} catch (error) {
-  input?.dispose();
-  console.error('[ARKVOID] Runtime failed to initialise.', error);
-  const message =
-    error instanceof Error
-      ? error.message
-      : 'The browser could not create the WebGL rendering context.';
-  document.getElementById('loading-screen')?.classList.add('is-hidden');
-  const errorPanel = document.getElementById('fatal-error');
-  const errorCopy = document.getElementById('fatal-error-copy');
-  if (errorPanel) errorPanel.hidden = false;
-  if (errorCopy) errorCopy.textContent = message;
-}
-
-window.addEventListener('beforeunload', () => runtime?.dispose(), { once: true });
+boot();

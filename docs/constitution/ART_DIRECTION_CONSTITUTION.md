@@ -1,38 +1,24 @@
 # ARKVOID Art Direction Constitution
 
-## Identity
+> Superseded in detail by `docs/art-bible/` (Stage 03). Where the two differ, the art bible wins; the budgets below remain the constitutional minimums.
 
-ARKVOID should feel like a place with age, geography, culture and consequence. The first world is a cultivation-inspired mountain civilisation, but the visual identity must be original and extend beyond any one fictional reference.
+## Intent
+An original cultivation-fantasy identity: monumental mountain geography, ancient stone-and-timber sect architecture, atmospheric depth, restrained high-contrast lighting, distinctive character silhouettes. Inspiration is broad genre tradition; no copying of any specific game, film, or illustration.
 
-The target is premium, grounded fantasy—not generic neon science fiction, toy-like low-poly presentation or an anime reskin.
+## Principles
+1. Silhouette first. Characters and landmarks must read as flat black shapes at 100 m.
+2. Scale hierarchy. Every vista has foreground, midground, and a monumental background landmark.
+3. Atmosphere is structure. Fog, light shafts and colour temperature separate depth layers.
+4. Material honesty. PBR (albedo, normal, roughness/metal, AO). No baked lighting in albedo.
+5. Palette discipline. Each region defines a palette (5 key colours + 2 accents) recorded here before production.
+6. Quality through coordination, not polycount.
 
-## Visual pillars
+## Current state (Stage 01)
+Procedural vertex-coloured terrain, box-primitive courtyard, capsule avatar. **All of this is placeholder blockout.** No final art exists. Do not describe it as final.
 
-1. **Geographical scale:** layered mountain silhouettes, readable valleys, passes, waterways and settlements.
-2. **Architectural authorship:** coherent construction logic, material traditions, hierarchy and weathering.
-3. **Human believability:** anatomy, silhouette, facial performance, posture, cloth construction and animation must be considered together.
-4. **Material credibility:** PBR response, roughness variation, edge wear, stone grain, timber, metal, fabric and skin.
-5. **Atmospheric depth:** controlled fog, exposure, cloud cover, time-of-day lighting and distance readability.
-6. **Environmental narrative:** wear paths, abandoned structures, tools, offerings, damage and lived-in spaces communicate history.
-7. **Distinctive forms:** sects, creatures, weapons, architecture and costume language must be recognisably ARKVOID.
-
-## Production pipeline
-
-- Blockout: validate scale, traversal, sightlines and encounter composition.
-- Modelling: maintain reference scale, topology standards, clean pivots and named material slots.
-- UV and materials: texel-density targets, channel packing, trim sheets and shared material families.
-- Rigging and animation: consistent skeleton conventions, locomotion sets, combat states and retargeting rules.
-- Engine integration: LODs, collision meshes, lightmap/texture budgets where relevant, bounds and origin conventions.
-- Review: compare in-engine under representative lighting, not only a DCC viewport.
-
-## Asset policy
-
-The current world and character are procedural geometry blockouts. They establish scale and runtime behaviour only. Replace them through a documented asset pipeline; do not disguise the blockout as final art.
-
-Every acquired asset needs a provenance entry in `docs/assets/ASSET_REGISTER.md`. No extracted commercial game content, ripped models, copied concept art or unauthorised textures.
-
-## Visual quality review
-
-Review a scene from gameplay camera distance, at native target resolution and on representative hardware. Evaluate silhouette, value grouping, scale, readability, composition and material response before adding expensive effects.
-
-More polygons, more bloom and more particles do not automatically mean higher quality.
+## Production standards (apply when real assets arrive)
+- Format: glTF 2.0 / GLB, Draco or Meshopt compression, KTX2 textures.
+- Texel density: 512 px/m for hero props, 256 px/m for environment kits.
+- Character budget (hero, LOD0): ≤ 60k triangles, ≤ 120 bones; LOD1 ≤ 20k; LOD2 ≤ 6k.
+- Environment kit piece LOD0 ≤ 8k triangles.
+- Every asset has a provenance record (see IP policy) before merge.

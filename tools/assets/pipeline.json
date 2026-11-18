@@ -1,0 +1,16 @@
+{
+  "_comment": "Processing steps for process.mjs. Commands follow the glTF Transform CLI README; confirm flags with `gltf-transform <command> --help` for the installed version. Not executed yet.",
+  "inputDir": "assets/source",
+  "outputDir": "public/assets/models",
+  "steps": [
+    {
+      "name": "optimize",
+      "command": "gltf-transform",
+      "args": ["optimize", "{in}", "{out}", "--compress", "meshopt", "--texture-compress", "webp"]
+    }
+  ],
+  "ktx2": {
+    "status": "pending",
+    "note": "Replace webp with KTX2 (etc1s for colour, uastc for normal maps) once the toktx binary and flags are confirmed."
+  }
+}

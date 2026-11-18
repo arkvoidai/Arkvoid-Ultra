@@ -1,0 +1,71 @@
+html,
+body,
+#app {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0b0d12;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: #d9dde4;
+}
+
+#app canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.av-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  background: #0b0d12;
+  letter-spacing: 0.3em;
+  font-size: 14px;
+  z-index: 20;
+  transition: opacity 0.4s ease;
+}
+
+.av-overlay.av-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.av-overlay.av-fatal {
+  background: #1a0b0b;
+  letter-spacing: normal;
+  padding: 24px;
+  text-align: center;
+}
+
+.av-hud {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 6px 8px;
+  font-size: 12px;
+  line-height: 1.45;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 4px;
+  white-space: pre;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.av-hint {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10;
+}

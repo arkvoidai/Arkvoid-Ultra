@@ -1,62 +1,53 @@
-# ARKVOID Progress Ledger
+# Progress Ledger
 
-**Last updated:** 2026-11-18  
-**Milestone:** Stage 00 — Foundation runtime
+Status values: `done` (implemented, tested), `partial`, `placeholder`, `not started`. Never mark unimplemented work done.
 
-## Implemented in this milestone
+## Stage 01 — 2026-11-18
 
-- [x] Canonical repository instructions and product, engineering, art, performance and IP constitutions.
-- [x] Architecture decisions, runtime overview and production roadmap.
-- [x] Vite, strict TypeScript and Three.js runtime entry point.
-- [x] WebGL renderer, scene, camera, resize lifecycle and bounded frame delta.
-- [x] Procedural height-field with shared height logic for geometry and player ground contact.
-- [x] Lake basin, distant mountain forms, sect-compound blockout and instanced vegetation and rocks.
-- [x] Third-person player-character blockout and follow camera.
-- [x] Keyboard movement, pointer look, sprint, jump and mobile touch controls.
-- [x] Qi motes, altar attunement, training-effigy interaction and progression thresholds.
-- [x] Versioned localStorage save with validation, attunement state and collected-mote restoration.
-- [x] Deterministic logic tests and GitHub Actions verification.
-- [x] Exact dependency lockfile committed to the repository.
-- [x] Canonical Prettier formatting applied to the repository.
+| Feature | Status | Evidence / notes |
+|---|---|---|
+| Repo constitution + docs | done | `docs/` |
+| Strict TS, lint, format, test, cycle tooling | done (config written) | Not executed in authoring environment: no network for `npm install`. Run `npm install && npm run check`. |
+| WebGL renderer + game loop (fixed 60 Hz) | done (code written) | `src/game/game.ts`, `src/core/fixedStepper.ts` (unit-tested logic) |
+| Third-person player movement | done (code written) | `src/player/playerController.ts`, unit tests |
+| Terrain chunk streaming | done (code written) | `src/world/chunkManager.ts`, unit tests; chunks built/disposed around player |
+| Collision | partial | Terrain ground + AABB colliders only. No slope limit, no dynamic bodies. |
+| Courtyard structures | placeholder | Box primitives with real colliders; not art |
+| Player avatar | placeholder | Capsule; no rig, no animation |
+| Optional GLB avatar loading + fallback | done (code written) | `src/assets/assetLoader.ts`; no GLB exists yet |
+| NPCs | not started | None exist |
+| Combat, cultivation, sects, persistence | not started | |
+| Water, vegetation, sky beyond gradient | not started | |
+| Real-device performance measurement | not started | Targets only |
+| Browser run of the game | not done | No browser/network in authoring environment |
 
-## Explicitly not implemented
+## Stage 02 research — 2026-11-18
 
-- [ ] Production-quality human character model, facial rig, cloth simulation or mocap animation.
-- [ ] Production environment assets, terrain texturing pipeline or final water rendering.
-- [ ] Production combat framework, hitbox/hurtbox system, enemy AI or creature encounter.
-- [ ] AI-driven NPCs, schedules, dialogue memory or persistent faction simulation.
-- [ ] World-cell streaming, LOD pipeline, large-world origin management or offline simulation.
-- [ ] Server backend, authentication, authoritative persistence, multiplayer or economy.
-- [ ] Audio, final VFX, accessibility settings and remappable controls.
-- [ ] Device performance validation on representative desktop and mobile hardware.
-- [ ] Browser visual QA session or recorded gameplay capture.
+| Item | Status | Evidence / notes |
+|---|---|---|
+| Engine comparison and weighted matrix | done (research) | `docs/research/ENGINE_COMPARISON.md`; read READMEs, release posts, docs, forums; no engine code read, nothing run |
+| Physics, navigation, asset, performance, repo, licence reviews | done (research) | `docs/research/*`; several sources blocked or unverified, flagged in each doc |
+| Tech stack ADR | done (proposed, gated) | `docs/architecture/TECH_STACK_ADR.md` |
+| Asset tooling (`tools/assets/`) | partial | Written, syntax-checked, no-asset path runs. Never run against a real GLB; packages not installed |
+| Asset provenance | partial | One verified candidate (HDRI); no assets shipped; other candidates need re-checking |
+| Babylon.js port | not started | Stage 02a |
+| Havok / navcat / Rapier integration | not started | Gated |
+| Simulation micro-benchmark (Node) | done | stepPlayer 373 ns, chunk heightfield sampling 0.675 ms; sandbox VM, not representative |
+| Browser / real-device benchmarks | not started | |
 
-## Known engineering caveats
+## Stage 03 art direction — 2026-11-18
 
-- The world and player are procedural blockouts. They prove scene assembly and interaction paths, not final art quality.
-- Collision uses a shared terrain height function and simple circular tree blockers. It is not a general rigid-body physics system.
-- Saves use browser localStorage and are not secure, portable or server-authoritative.
-- The environment loads as one scene; there is no world streaming.
-- Character animation is a lightweight procedural placeholder.
-- The first production build contains a 571.57 KB minified JavaScript chunk (144.45 KB gzipped). Vite reports that the uncompressed chunk exceeds its 500 KB advisory threshold; profile and split the runtime before adding substantial content.
+| Item | Status | Evidence / notes |
+|---|---|---|
+| Ten-image reference analysis + traceability matrix | done (documentation) | `docs/art-bible/USER_REFERENCE_ANALYSIS.md`; all ten images viewed |
+| Visual identity, environment, architecture, character, creature, material, lighting, cinematic bibles | done (documentation) | `docs/art-bible/*`; design decisions are tagged `[D]` and not yet validated in engine |
+| Reference register and acquisition rules | partial | External image research is thin: several image searches returned nothing; no credible photo set collected |
+| Game and cultivation research | partial | Read: WWM letter and article, Black Myth Steam page, GoT landmarks, FFXVI article, genre primer. Not read: FFXIV, Lost Soul Aside, Sword of Justice, the six named cultivation works (individually) |
+| Original design grammar (notch/span/ring, resonance scale) | proposed | Concept only; no in-engine implementation |
+| Any 3D art, textures, character or creature model | not started | Nothing exists beyond Stage 01 blockout |
+| Measurable art checks (colour budget, emissive cap, value structure) | not started | Need a screenshot harness |
 
-## Validation results
+## Measured performance
+Node micro-benchmark only (see PERFORMANCE_RESEARCH.md). No browser or device numbers.
 
-GitHub Actions `Game Runtime CI` completed successfully on the foundation implementation:
-
-- [x] `npm ci` — dependency installation passed.
-- [x] `npm run typecheck` — strict TypeScript check passed.
-- [x] `npm run lint` — ESLint passed.
-- [x] `npm run format:check` — Prettier check passed.
-- [x] `npm run test` — 2 test files, 8 tests passed.
-- [x] `npm run build` — Vite production build passed (16 modules transformed).
-
-The build emitted the documented chunk-size advisory, not a build failure. Browser visual QA and real-device performance testing were not performed in this environment.
-
-## Next stage
-
-1. Run the game in a browser on desktop and mobile and record a playtest.
-2. Profile the first valley at representative resolutions; establish p50 and p95 frame times.
-3. Split and optimise runtime code before adding substantial content or assets.
-4. Replace the player blockout with an original rigged character and production animation set.
-5. Begin the combat/interaction system and first creature encounter.
+_(none yet)_

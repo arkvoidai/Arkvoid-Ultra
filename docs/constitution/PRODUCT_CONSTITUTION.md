@@ -1,69 +1,32 @@
 # ARKVOID Product Constitution
 
-**Status:** Foundational  
-**Product:** Original third-person cultivation action RPG  
-**Primary surface:** The playable 3D world
+## What ARKVOID is
+An original persistent cultivation-fantasy universe. First product: a third-person 3D open-world action RPG, playable in the browser (WebGL via Three.js). Long-term ambition: a persistent embodied world-computing platform. That ambition is earned only after the game is credible.
 
-## 1. Product thesis
+## What ARKVOID is not
+Not a landing page, editorial site, gallery, portfolio, fake-3D CSS scene, or static panorama. The game viewport is the product. Launcher, loading, settings, HUD and in-game menus are supporting UI only.
 
-ARKVOID is an original cultivation-fantasy universe in which a player inhabits a coherent place rather than browsing a representation of one. The world is the product. Menus, settings, launch flow and HUD exist to support play.
+## Product principles (each is a testable rule)
+1. Real 3D geometry. Every visible world surface is a mesh in the scene graph.
+2. Real movement. Player position comes from the simulation (`stepPlayer`), never scripted camera paths.
+3. Real collision. Anything the player can see as solid must have a collider or be flagged `decorative` in the ledger.
+4. Real interactions. A UI control ships only when its handler changes game state.
+5. Real data. Progression values come from typed game data; no fabricated stats.
+6. Real streaming. World chunks load and unload around the player; resident chunk count is bounded and displayed in the debug HUD.
+7. Visual quality comes from asset production and art direction, not polygon counts.
+8. Performance is measured on real devices and recorded in the progress ledger.
+9. Important player state is persisted server-side with validation (not before the persistence stage; never trust client-only saves for economy or progression).
+10. Original IP only. See `INTELLECTUAL_PROPERTY_POLICY.md`.
 
-The initial product is a third-person 3D action RPG. The longer-term ambition is a persistent embodied world-computing platform, but that ambition does not excuse an unfinished game. The game must earn the right to expand into a platform.
+## Honesty rules
+- Never describe a feature as present unless it runs in the build.
+- Placeholder content (e.g. the capsule avatar) must be labelled as placeholder in code, HUD and ledger.
+- NPC "AI" is not claimed until NPCs have a decision loop with tests.
+- Streaming is not claimed unless chunks are loaded incrementally.
 
-## 2. Player promise
-
-The player enters a geographically coherent civilisation, explores physical spaces, meets inhabitants, trains, fights, discovers places, encounters sects and creatures, gathers resources and advances through cultivation.
-
-A player action should have a legible result. A place should be recognisable. Progression should be grounded in recorded game state. The world should eventually continue evolving when the player is absent, but no such simulation is claimed by this foundation.
-
-## 3. Non-negotiable principles
-
-1. The primary experience is a real-time 3D game viewport.
-2. Geometry, collision, movement and interactions must be implemented—not represented by images or decorative controls.
-3. Game state has explicit owners and schemas.
-4. World scale is described in measured and testable terms.
-5. Networked persistence is authoritative and secure before it is used for competitive or valuable state.
-6. Asset ownership, provenance and permitted use are recorded.
-7. Performance is measured on representative hardware.
-8. Placeholder art and behaviours are labelled honestly.
-9. Systems are designed for incremental replacement without discarding the whole runtime.
-10. Original IP takes precedence over imitation.
-
-## 4. Product exclusions
-
-ARKVOID is not a landing page, marketing website, static panorama, image gallery, concept-art portfolio, architectural explainer, fake screenshot demo or a collection of non-functional game controls.
-
-It is not yet a massively multiplayer game, a server-authoritative simulation, a persistent offline NPC society or a spatial-computing operating system.
-
-## 5. Initial vertical-slice boundary
-
-The current foundation provides a procedural valley, a sect compound blockout, a player character blockout, movement, follow camera, touch controls, Qi collection, a training interaction, an altar interaction, HUD feedback and local browser saves.
-
-This proves a real runtime path. It does not prove final art quality, advanced combat, AI characters, world streaming, online persistence, multiplayer or mobile-device performance targets.
-
-## 6. Player-facing quality bar
-
-A playable milestone must have:
-
-- A stable startup path and visible runtime failure state.
-- Understandable controls on desktop and touch devices.
-- Responsive movement and camera behaviour.
-- Consistent collision and ground contact within the supported area.
-- Clear feedback for interactions and progression.
-- Recoverable local state during prototype development.
-- No dead-end controls presented as working features.
-
-## 7. Feature acceptance
-
-Every feature proposal must identify:
-
-- Player problem and intended outcome.
-- Owning runtime system and data contract.
-- Failure and edge cases.
-- Desktop and touch implications.
-- Performance budget.
-- Automated or repeatable acceptance test.
-- Required production assets and their provenance.
-- What remains explicitly out of scope.
-
-A feature is not complete because a button exists, a screenshot looks convincing or a document describes the intended behaviour.
+## Definition of done (feature level)
+- Implemented in the repo, typed, linted, formatted.
+- Unit tests for pure logic; manual or automated run of the real game.
+- `npm run check` and `npm run build` pass.
+- Entry added to `docs/production/PROGRESS_LEDGER.md` with status: `done`, `partial` or `placeholder`.
+- Performance budget in `PERFORMANCE_CONSTITUTION.md` not regressed.

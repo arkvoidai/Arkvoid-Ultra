@@ -1,0 +1,8 @@
+{
+  "_comment": "Initial budgets by asset class (folder name under public/assets/models). Tune with device measurements; see docs/research/ASSET_PIPELINE_RESEARCH.md.",
+  "default": { "maxTriangles": 8000, "maxMaterials": 2, "maxTexturePx": 2048, "maxJoints": 0 },
+  "props": { "maxTriangles": 8000, "maxMaterials": 2, "maxTexturePx": 2048, "maxJoints": 0 },
+  "environment": { "maxTriangles": 8000, "maxMaterials": 3, "maxTexturePx": 2048, "maxJoints": 0 },
+  "characters": { "maxTriangles": 60000, "maxMaterials": 6, "maxTexturePx": 2048, "maxJoints": 120 },
+  "creatures": { "maxTriangles": 60000, "maxMaterials": 6, "maxTexturePx": 2048, "maxJoints": 120 }
+}

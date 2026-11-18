@@ -1,42 +1,23 @@
 # ARKVOID Performance Constitution
 
-## Frame budgets
+All numbers are **targets**. Nothing here has been measured on real hardware yet; measured results go in `PROGRESS_LEDGER.md` with device, browser, date.
 
-The budgets below are initial engineering targets, not measured claims.
+## Reference tiers
+| Tier | Device class | Resolution | Target |
+|---|---|---|---|
+| A | Desktop, GTX 1660 / RX 580 class | 1920×1080 | 60 fps, 1% low ≥ 45 |
+| B | Integrated (Iris Xe / Apple M1 class) | 1920×1080 | 30 fps minimum, 60 stretch |
+| C | Recent mid-range phone | 1280×720 equivalent | 30 fps (post-Stage 03) |
 
-| Target class              | Frame target | CPU game/update target | GPU/render target |
-| ------------------------- | -----------: | ---------------------: | ----------------: |
-| Mid/high desktop          |       60 FPS |           4 ms average |     12 ms average |
-| Entry desktop / laptop    |       45 FPS |           6 ms average |     16 ms average |
-| Supported mobile baseline |       30 FPS |           8 ms average |     24 ms average |
+## Budgets (Tier A)
+- Frame time: ≤ 16.6 ms total; JS main-thread ≤ 8 ms.
+- Draw calls ≤ 300; triangles in view ≤ 1,500,000.
+- Fixed simulation step: 1/60 s; max 5 catch-up steps per frame.
+- Chunk build ≤ 4 ms per chunk; ≤ 1 chunk built per frame during normal play.
+- Resident terrain chunks ≤ 40 (current config: view radius 3 → ≤ 29).
+- GC: no per-frame allocations in the simulation hot path (reuse vectors).
+- Initial JS ≤ 1.5 MB gzip excluding assets. Time to interactive ≤ 6 s on 50 Mbps.
+- HUD DOM updates ≤ 4 Hz.
 
-Measure p50 and p95 frame time during representative traversal and combat. Averages alone can hide stutter.
-
-## Initial prototype constraints
-
-- Cap renderer pixel ratio rather than blindly matching high-DPI device pixels.
-- Use instancing for repeated vegetation and rock geometry.
-- Keep shadow map size and shadow-casting lights bounded.
-- Avoid allocating vectors, arrays or closures in the hot frame path when practical.
-- Clamp simulation delta after focus loss.
-- Keep the supported world bound explicit.
-- Add profiling overlays only when they report measured values.
-
-## Production budgets to establish
-
-The next profiling pass must establish real baselines for:
-
-- Draw calls, triangles and visible object count.
-- Geometry and texture memory.
-- Shader compile and first-frame time.
-- CPU update time and GPU frame time.
-- Long-frame distribution and thermal throttling on mobile.
-- Initial and steady-state memory during extended sessions.
-
-## Scaling strategy
-
-Introduce frustum and distance culling before increasing density. Add level-of-detail and hierarchical world cells before expanding the playable radius. Separate simulation relevance from render visibility. Stream and unload world cells only after ownership, lifecycle and save boundaries are designed.
-
-## Acceptance
-
-A performance claim must state hardware, browser, resolution, quality settings, scene, duration, sample count and p50/p95 results. Do not claim “60 FPS on mobile” without device evidence.
+## Measurement
+Debug HUD shows fps, frame ms, draw calls, triangles, resident chunks. Record real-device numbers per milestone. A regression > 10% on any budget blocks merge unless justified in the ledger.

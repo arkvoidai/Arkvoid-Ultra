@@ -1,53 +1,43 @@
 # ARKVOID Engineering Constitution
 
-## Runtime architecture
+## Runtime
+One application: Vite + strict TypeScript + Three.js, in `src/`. No second app, no framework in the render loop. DOM is used only for HUD/menus and is updated at a throttled rate (default 4 Hz), never per frame.
 
-- One browser-first application and one primary runtime.
-- TypeScript strict mode for gameplay, rendering and application code.
-- Three.js owns scene graph, meshes, camera, materials and rendering.
-- Game simulation is imperative and runs from a single bounded frame loop.
-- DOM HUD code is an adapter over runtime state; it does not own gameplay.
-- No React render work, state-store notification storm or network request belongs inside the frame loop.
-- Rendering, input, world generation, character control, gameplay systems and persistence remain separate modules.
+## Folder boundaries (dependencies point downward only)
+```
+src/config     tuning constants and typed gameplay/world parameters (no imports)
+src/core       logger, fixed-step loop, math helpers (imports config only)
+src/physics    collision primitives (pure; imports core types)
+src/world      noise, heightfield, chunk manager, structures, terrain meshing
+src/player     player simulation (pure, no Three.js)
+src/input      keyboard / pointer-lock abstraction
+src/assets     asset manifest and loader with failure strategy
+src/ui         DOM HUD, loading, fatal-error overlay
+src/game       composition root: wires everything, owns the Three.js scene
+src/main.ts    bootstrap only
+```
+Rules: `physics`, `player`, `world/noise`, `world/heightfield`, `world/chunkManager` must not import `three`. This keeps simulation unit-testable and portable to a server later. `npm run check:cycles` must report zero circular dependencies.
 
-## Code organisation
+## TypeScript
+`strict`, `noUncheckedIndexedAccess`, `noImplicitOverride`, `noFallthroughCasesInSwitch`. No `any`. No non-null `!` outside tests. Data crossing system boundaries uses exported interfaces.
 
-- `src/game/world`: terrain functions, deterministic world dressing and environment assembly.
-- `src/game/character`: player representation and animation adapter.
-- `src/game/input`: keyboard, pointer and virtual-control translation.
-- `src/game/systems`: progression, persistence and future gameplay services.
-- `src/ui`: DOM presentation and accessible control surfaces.
-- `src/styles`: game HUD styling only.
-- `tests`: deterministic logic tests and future integration tests.
+## Naming
+Files: `camelCase.ts`; classes `PascalCase`; constants `UPPER_SNAKE` only for frozen config objects; tests `*.test.ts` beside the module.
 
-## Type and state discipline
+## Gameplay rules
+All tunables live in `src/config/`. No magic numbers in systems.
 
-- No implicit `any`; no unvalidated JSON casts at external boundaries.
-- Persisted data must include a schema version and pass runtime validation.
-- Use explicit interfaces for input frames, save records, colliders and gameplay snapshots.
-- One-shot inputs are queued and consumed once. Held controls remain held until released or focus is lost.
-- Random world dressing uses a supplied seed.
-- Do not scatter gameplay thresholds through rendering code.
+## Errors and logging
+All logging via `createLogger(scope)`. `console.*` is lint-banned outside `core/logger.ts`. Global `error` / `unhandledrejection` handlers are installed at boot and surface a fatal overlay.
 
-## Runtime safety
+## Asset failure strategy
+Load with timeout (default 8 s) and retries (default 2). On final failure: log, record in the failure registry, substitute the declared fallback. Required assets log `error`; optional assets log `warn`. The game must remain playable with all fallbacks.
 
-- Clamp frame delta to protect simulation after tab suspension.
-- Handle unavailable WebGL and unavailable local storage.
-- Dispose GPU resources, event listeners, observers and animation loops.
-- Avoid unbounded scene growth and per-frame object allocation where practical.
-- Keep asset loading asynchronous, cancellable and observable when an asset pipeline is introduced.
-- Never expose credentials in client bundles or commit secrets.
+## Package management
+`package-lock.json` committed; CI uses `npm ci`. Node version pinned in `.nvmrc`. New dependencies need an entry in `TECHNOLOGY_DECISIONS.md`.
 
-## Dependency policy
+## Automated checks (`npm run check`)
+typecheck, lint, format check, unit tests, cycle check. CI runs `check` and `build` on every push and PR.
 
-- Pin direct dependency versions exactly.
-- Commit a package-manager lockfile before release or production deployment.
-- New runtime dependencies require an architecture note: capability, alternatives, bundle/runtime cost, licence and maintenance risk.
-- Avoid engine dependencies that duplicate existing capabilities without a clear benefit.
-- Review dependency and browser support when upgrading the toolchain.
-
-## Quality gates
-
-The required local gate is `npm run verify`: typecheck, lint, formatter check, automated tests and production build. CI runs the same command on pull requests and pushes to main.
-
-A passing build is not proof of visual quality or device performance. Those require browser/device testing and recorded evidence.
+## Secrets
+No secrets in the repo. `.env*` is gitignored.
