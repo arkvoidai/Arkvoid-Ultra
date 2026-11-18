@@ -7,6 +7,7 @@ ARKVOID may be inspired by broad genre traditions: cultivation progression, sect
 It must create its own expression.
 
 Do not copy or closely recreate:
+
 - Protected characters, character names or distinctive costume designs.
 - Fictional faction or sect names that identify another work.
 - Maps, recognisable world layouts or signature landmarks.
@@ -19,6 +20,7 @@ A genre convention is not a licence to copy a specific expression.
 ## Asset provenance
 
 Before an asset enters the repository or shipped build, record:
+
 - Asset identifier and file path.
 - Creator or supplier.
 - Original source URL or purchase record reference.

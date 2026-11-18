@@ -30,14 +30,14 @@ Open the local Vite URL. The game starts directly in the 3D runtime.
 
 ## Controls
 
-| Action | Keyboard | Touch |
-| --- | --- | --- |
-| Move | WASD / arrow keys | Direction pad |
-| Look | Drag on the right side of the scene | Drag on the right side of the scene |
-| Sprint | Shift | Hold RUN |
-| Jump | Space | JUMP |
-| Interact | E | ATTUNE |
-| Attack | J | STRIKE |
+| Action   | Keyboard                            | Touch                               |
+| -------- | ----------------------------------- | ----------------------------------- |
+| Move     | WASD / arrow keys                   | Direction pad                       |
+| Look     | Drag on the right side of the scene | Drag on the right side of the scene |
+| Sprint   | Shift                               | Hold RUN                            |
+| Jump     | Space                               | JUMP                                |
+| Interact | E                                   | ATTUNE                              |
+| Attack   | J                                   | STRIKE                              |
 
 ## Engineering commands
 

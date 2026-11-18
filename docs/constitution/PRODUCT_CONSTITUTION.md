@@ -44,6 +44,7 @@ This proves a real runtime path. It does not prove final art quality, advanced c
 ## 6. Player-facing quality bar
 
 A playable milestone must have:
+
 - A stable startup path and visible runtime failure state.
 - Understandable controls on desktop and touch devices.
 - Responsive movement and camera behaviour.
@@ -55,6 +56,7 @@ A playable milestone must have:
 ## 7. Feature acceptance
 
 Every feature proposal must identify:
+
 - Player problem and intended outcome.
 - Owning runtime system and data contract.
 - Failure and edge cases.

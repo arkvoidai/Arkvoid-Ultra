@@ -48,6 +48,7 @@ Read this file before changing code.
 ## Definition of done
 
 A change is done only when:
+
 1. Its player-visible behaviour is implemented, not just described.
 2. The acceptance criteria can be checked.
 3. Typecheck, lint, tests and production build pass, or any failure is transparently recorded.

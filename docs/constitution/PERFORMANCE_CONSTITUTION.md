@@ -4,11 +4,11 @@
 
 The budgets below are initial engineering targets, not measured claims.
 
-| Target class | Frame target | CPU game/update target | GPU/render target |
-| --- | ---: | ---: | ---: |
-| Mid/high desktop | 60 FPS | 4 ms average | 12 ms average |
-| Entry desktop / laptop | 45 FPS | 6 ms average | 16 ms average |
-| Supported mobile baseline | 30 FPS | 8 ms average | 24 ms average |
+| Target class              | Frame target | CPU game/update target | GPU/render target |
+| ------------------------- | -----------: | ---------------------: | ----------------: |
+| Mid/high desktop          |       60 FPS |           4 ms average |     12 ms average |
+| Entry desktop / laptop    |       45 FPS |           6 ms average |     16 ms average |
+| Supported mobile baseline |       30 FPS |           8 ms average |     24 ms average |
 
 Measure p50 and p95 frame time during representative traversal and combat. Averages alone can hide stutter.
 
@@ -25,6 +25,7 @@ Measure p50 and p95 frame time during representative traversal and combat. Avera
 ## Production budgets to establish
 
 The next profiling pass must establish real baselines for:
+
 - Draw calls, triangles and visible object count.
 - Geometry and texture memory.
 - Shader compile and first-frame time.

@@ -281,7 +281,9 @@ export class GameRuntime {
         this.hud.notify('Training effigy broken · +22 Qi');
         this.saveNow();
       } else {
-        this.hud.notify(`Strike landed · ${this.world.trainingTarget.durability} impacts remaining`);
+        this.hud.notify(
+          `Strike landed · ${this.world.trainingTarget.durability} impacts remaining`,
+        );
       }
     } else if (targetDistance <= 5.5) {
       this.hud.notify('The training effigy has already been broken.');

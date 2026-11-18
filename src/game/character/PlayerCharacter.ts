@@ -1,10 +1,4 @@
-import {
-  CapsuleGeometry,
-  Group,
-  Mesh,
-  MeshStandardMaterial,
-  SphereGeometry,
-} from 'three';
+import { CapsuleGeometry, Group, Mesh, MeshStandardMaterial, SphereGeometry } from 'three';
 import type { Vector3 } from 'three';
 
 export class PlayerCharacter {
@@ -81,7 +75,9 @@ export class PlayerCharacter {
     this.animationTime += deltaSeconds;
     const moving = horizontalSpeed > 0.15;
     const gait = moving ? Math.sin(this.animationTime * (horizontalSpeed > 7 ? 13 : 9)) : 0;
-    this.body.position.y = moving ? Math.abs(gait) * 0.045 : Math.sin(this.animationTime * 1.2) * 0.018;
+    this.body.position.y = moving
+      ? Math.abs(gait) * 0.045
+      : Math.sin(this.animationTime * 1.2) * 0.018;
     this.leftLeg.rotation.x = gait * 0.36;
     this.rightLeg.rotation.x = -gait * 0.36;
     this.leftArm.rotation.x = -gait * 0.28;
