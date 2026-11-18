@@ -1,0 +1,57 @@
+name: One-time ARKVOID Stage 03 archive import
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "arkvoid-stage03.zip"
+
+permissions:
+  contents: write
+
+jobs:
+  replace-repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify archive and extract safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f arkvoid-stage03.zip
+          echo "2d7c781717b1644190ffaeb9912fe41a068e80a22d407ec9ec65cab4de1c2be8  arkvoid-stage03.zip" | sha256sum --check
+          unzip -tq arkvoid-stage03.zip
+          python3 - <<'PY'
+          import pathlib, stat, zipfile
+          archive = zipfile.ZipFile("arkvoid-stage03.zip")
+          destination = pathlib.Path("/tmp/arkvoid-stage03")
+          destination.mkdir(parents=True, exist_ok=True)
+          for member in archive.infolist():
+              path = pathlib.PurePosixPath(member.filename)
+              mode = member.external_attr >> 16
+              if path.is_absolute() or ".." in path.parts:
+                  raise SystemExit(f"Unsafe archive path: {member.filename}")
+              if stat.S_ISLNK(mode):
+                  raise SystemExit(f"Symlink not allowed: {member.filename}")
+          archive.extractall(destination)
+          print(f"Validated and extracted {len(archive.infolist())} archive entries")
+          PY
+
+      - name: Replace repository contents with archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf -- {} +
+          cp -a /tmp/arkvoid-stage03/. .
+          rm -f arkvoid-stage03.zip
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Replace repository contents with arkvoid-stage03 archive"
+          git push origin HEAD:main
