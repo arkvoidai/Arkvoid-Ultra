@@ -26,5 +26,13 @@ jobs:
           node-version: 26
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Preserve generated dependency lockfile
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: arkvoid-npm-lockfile
+          path: package-lock.json
+          if-no-files-found: warn
+          retention-days: 3
       - name: Verify project
         run: npm run verify
