@@ -15,11 +15,11 @@ import {
   MeshStandardMaterial,
   PlaneGeometry,
   Quaternion,
-  Scene,
   SphereGeometry,
   TorusGeometry,
   Vector3,
 } from 'three';
+import type { Scene } from 'three';
 import { createSeededRandom } from './random';
 import { terrainHeightAt, WORLD_HALF_EXTENT } from './terrain';
 

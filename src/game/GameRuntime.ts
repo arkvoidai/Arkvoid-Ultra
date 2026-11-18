@@ -19,7 +19,7 @@ import { ProgressionSystem } from './systems/ProgressionSystem';
 import { SaveRepository } from './systems/SaveRepository';
 import { WorldBuilder, type WorldBuildResult } from './world/WorldBuilder';
 import { clampToWorld, terrainHeightAt } from './world/terrain';
-import { GameHud } from '../ui/GameHud';
+import type { GameHud } from '../ui/GameHud';
 
 const PLAYER_SPEED = 5.2;
 const SPRINT_MULTIPLIER = 1.72;

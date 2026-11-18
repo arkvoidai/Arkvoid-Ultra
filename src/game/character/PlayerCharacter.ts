@@ -4,8 +4,8 @@ import {
   Mesh,
   MeshStandardMaterial,
   SphereGeometry,
-  Vector3,
 } from 'three';
+import type { Vector3 } from 'three';
 
 export class PlayerCharacter {
   readonly root = new Group();
