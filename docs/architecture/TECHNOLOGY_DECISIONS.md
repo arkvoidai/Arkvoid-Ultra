@@ -68,4 +68,4 @@
 
 **Reasons:** Avoid silent direct-dependency upgrades. The selected toolchain uses Vite 8.3.8, Three.js 0.187.0, `@types/three` 0.187.0, TypeScript 6.0.3, Vitest 5.1.0, ESLint 10.15.0 and typescript-eslint 8.73.0. TypeScript 6.0.3 is used because the selected TypeScript ESLint integration does not yet declare TypeScript 7 compatibility.
 
-**Consequence / open action:** The authoring shell has no outbound DNS/network access. GitHub Actions can reach the registry and now preserves the generated npm lockfile as a short-lived artifact. Review and commit that lockfile before production deployment.
+**Consequence / open action:** The authoring shell has no outbound DNS/network access. GitHub Actions now installs dependencies and attempts to commit the exact generated package lock to same-repository PR branches. Verify that commit and use `npm ci` as the standard install path before production deployment.

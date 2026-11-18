@@ -91,7 +91,11 @@ export class WorldBuilder {
     const size = WORLD_HALF_EXTENT * 2;
     const segments = 176;
     const geometry = new PlaneGeometry(size, size, segments, segments);
-    const positions = geometry.attributes.position;
+    const positions = geometry.getAttribute('position');
+    if (!positions) {
+      geometry.dispose();
+      throw new Error('Terrain geometry did not expose its position attribute.');
+    }
     const colors: number[] = [];
 
     for (let index = 0; index < positions.count; index += 1) {

@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   verify:
@@ -21,7 +21,34 @@ jobs:
         with:
           node-version: 26
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
+      - name: Commit generated npm lockfile to same-repository PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "::warning::npm did not generate package-lock.json"
+            exit 0
+          fi
+          cp package-lock.json "$RUNNER_TEMP/arkvoid-package-lock.json"
+          git fetch origin "$PR_HEAD_REF"
+          git checkout --detach FETCH_HEAD
+          cp "$RUNNER_TEMP/arkvoid-package-lock.json" package-lock.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          if git diff --cached --quiet; then
+            echo "package-lock.json is already committed"
+          else
+            git commit -m "chore: add deterministic npm dependency lockfile"
+            git push origin "HEAD:$PR_HEAD_REF" || echo "::warning::Could not push generated lockfile; use the uploaded artifact."
+          fi
       - name: Preserve generated dependency lockfile
         if: always()
         uses: actions/upload-artifact@v4
