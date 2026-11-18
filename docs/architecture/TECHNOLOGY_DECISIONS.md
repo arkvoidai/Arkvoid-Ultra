@@ -60,9 +60,9 @@
 
 **Consequences:** Local data is user-controlled, device-local and untrusted. It must not hold purchased value, competitive progression or security-sensitive state. A server-authoritative persistence architecture is required before those features exist.
 
-## ADR-007 — Exact direct dependency pins; lockfile pending
+## ADR-007 — Exact direct dependency pins and npm lockfile
 
-**Status:** Partially complete.
+**Status:** Accepted.
 
 **Decision:** Pin direct packages exactly and use Node 26 in CI.
 

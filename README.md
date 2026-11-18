@@ -22,7 +22,7 @@ This is an early playable greybox. The character is procedural placeholder geome
 Requirements: Node.js 26 LTS and npm.
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 

@@ -5,20 +5,19 @@
 
 ## Implemented in this milestone
 
-- [x] Canonical repository instruction file and product/engineering/art/performance/IP constitutions.
-- [x] Initial architecture decisions, runtime overview and production roadmap.
-- [x] Vite + strict TypeScript + Three.js runtime entry point.
-- [x] WebGL renderer, scene, camera, resize lifecycle, bounded frame delta and resource cleanup.
-- [x] Procedural height-field with shared height function for rendering and player ground contact.
-- [x] Lake basin, distant mountain forms, sect compound blockout and instanced vegetation/rocks.
-- [x] Third-person player character blockout and follow camera.
+- [x] Canonical repository instructions and product, engineering, art, performance and IP constitutions.
+- [x] Architecture decisions, runtime overview and production roadmap.
+- [x] Vite, strict TypeScript and Three.js runtime entry point.
+- [x] WebGL renderer, scene, camera, resize lifecycle and bounded frame delta.
+- [x] Procedural height-field with shared height logic for geometry and player ground contact.
+- [x] Lake basin, distant mountain forms, sect-compound blockout and instanced vegetation and rocks.
+- [x] Third-person player-character blockout and follow camera.
 - [x] Keyboard movement, pointer look, sprint, jump and mobile touch controls.
-- [x] Qi motes, altar attunement, training effigy hit interaction and progression thresholds.
-- [x] Versioned localStorage save with runtime validation, attunement state and collected-mote restoration.
-- [x] Unit tests for terrain determinism, bounds, seeded randomness and progression.
-- [x] GitHub Actions verification workflow.
-- [x] First CI feedback addressed: added matching Three.js declarations and corrected strict index-signature property access.
-- [x] Second CI feedback addressed in code: terrain position attribute now has an explicit runtime guard.
+- [x] Qi motes, altar attunement, training-effigy interaction and progression thresholds.
+- [x] Versioned localStorage save with validation, attunement state and collected-mote restoration.
+- [x] Deterministic logic tests and GitHub Actions verification.
+- [x] Exact dependency lockfile committed to the repository.
+- [x] Canonical Prettier formatting applied to the repository.
 
 ## Explicitly not implemented
 
@@ -34,26 +33,30 @@
 
 ## Known engineering caveats
 
-- The world and player are procedural blockouts. Their purpose is to prove scene assembly, control and interaction paths.
-- Collision currently consists of a shared terrain height function and simple circular tree blockers. It is not a general rigid-body physics system.
-- Saves live in browser localStorage and are not secure, portable or server-authoritative.
-- The environment is loaded as one scene; there is no streaming.
-- The first character/animation implementation is deliberately lightweight.
+- The world and player are procedural blockouts. They prove scene assembly and interaction paths, not final art quality.
+- Collision uses a shared terrain height function and simple circular tree blockers. It is not a general rigid-body physics system.
+- Saves use browser localStorage and are not secure, portable or server-authoritative.
+- The environment loads as one scene; there is no world streaming.
+- Character animation is a lightweight procedural placeholder.
+- The first production build contains a 571.57 KB minified JavaScript chunk (144.45 KB gzipped). Vite reports that the uncompressed chunk exceeds its 500 KB advisory threshold; profile and split the runtime before adding substantial content.
 
-## Validation status
+## Validation results
 
-- Repository audit and file creation: completed through GitHub.
-- GitHub Actions dependency installation: passed.
-- First TypeScript check: failed on missing `@types/three`, strict indexed-property access and an unchecked geometry position attribute.
-- Corrective commits: added `@types/three@0.187.0`, used bracket notation for external record/dataset properties, and guarded the geometry position attribute.
-- A CI run for the terrain-guard fix is still required. Lint, formatter check, tests and production build have not yet been observed.
-- CI now generates a lockfile on the runner and attempts to commit it to a same-repository PR branch; it also uploads the lockfile as an artifact for recovery.
-- The authoring shell cannot resolve GitHub from its local network, so local clone and browser QA were not possible from this session.
+GitHub Actions `Game Runtime CI` completed successfully on the foundation implementation:
+
+- [x] `npm ci` — dependency installation passed.
+- [x] `npm run typecheck` — strict TypeScript check passed.
+- [x] `npm run lint` — ESLint passed.
+- [x] `npm run format:check` — Prettier check passed.
+- [x] `npm run test` — 2 test files, 8 tests passed.
+- [x] `npm run build` — Vite production build passed (16 modules transformed).
+
+The build emitted the documented chunk-size advisory, not a build failure. Browser visual QA and real-device performance testing were not performed in this environment.
 
 ## Next stage
 
-1. Get a fresh CI result for the corrected PR head and fix any further failures.
-2. Confirm `package-lock.json` is committed to the PR branch.
-3. Launch the application in a browser and inspect desktop and touch layouts.
-4. Add a collision/ground test scene and record a short playtest.
-5. Replace the player blockout with the first original production character asset.
+1. Run the game in a browser on desktop and mobile and record a playtest.
+2. Profile the first valley at representative resolutions; establish p50 and p95 frame times.
+3. Split and optimise runtime code before adding substantial content or assets.
+4. Replace the player blockout with an original rigged character and production animation set.
+5. Begin the combat/interaction system and first creature encounter.

@@ -8,9 +8,9 @@
 
 - Repository: `arkvoidai/Arkvoid-Ultra`
 - Default branch: `main`
-- Initial state: one initial commit and one existing `README.md`
-- Existing source files, manifests, lockfiles, tests, workflows and deployment files: none found in the recursive Git tree.
-- The existing README was read and rewritten to describe the actual game-runtime foundation.
+- Initial state: one initial commit and an existing `README.md`.
+- The initial recursive Git tree contained no source files, package manifest, lockfile, tests or workflows.
+- The existing README was inspected and updated to describe the game runtime.
 
 ## Dependencies selected
 
@@ -18,33 +18,44 @@
 - Build/dev server: Vite 8.3.8.
 - Language: TypeScript 6.0.3.
 - Tests: Vitest 5.1.0.
-- Lint: ESLint 10.15.0 + typescript-eslint 8.73.0.
+- Lint: ESLint 10.15.0 with typescript-eslint 8.73.0.
 - Formatting: Prettier 3.10.1.
 - CI runtime: Node.js 26.
+- An npm lockfile is committed; CI uses `npm ci`.
 
-Versions are exact-pinned in package.json. CI generates the npm lockfile and attempts to commit it to the same-repository PR branch; an artifact upload is retained as a recovery path.
+## Delivered foundation
 
-## Files created or updated
+The pull request contains the 3D runtime, procedural first-valley blockout, third-person movement and camera, keyboard/touch controls, Qi collection, altar attunement, training-effigy interaction, local versioned save, HUD, tests, CI and project constitutions/architecture/roadmap.
 
-The foundation change includes the runtime source, tests, workflow, configuration, constitutions, architecture records, roadmap, status report and asset register. The GitHub pull request's changed-files tab is the authoritative manifest.
+The character and environment remain procedural placeholders. This milestone does not implement AI NPCs, world streaming, cloud persistence, multiplayer, final AAA art or a production combat framework.
 
 ## Validation
 
-- Repository audit: completed through GitHub.
-- First GitHub Actions dependency installation: passed.
-- First TypeScript check: failed due to missing Three.js declarations and strict indexed-property access.
-- Follow-up TypeScript check: passed those previous issues and identified an unchecked geometry position attribute.
-- Corrective commit: added `@types/three@0.187.0`, bracket notation for external record/dataset properties, and a runtime guard for the terrain position attribute.
-- CI for the latest corrective commit: pending.
-- Lint, formatter check, tests and production build: not yet observed.
-- Browser launch/visual inspection: not performed in this environment because the authoring shell cannot resolve GitHub or access the package registry.
+A GitHub Actions `Game Runtime CI` run completed successfully:
 
-No test, typecheck or production build is reported as passing without an actual execution result.
+- Dependency installation with `npm ci`: passed.
+- Strict TypeScript check: passed.
+- ESLint: passed.
+- Prettier formatting check: passed.
+- Vitest: 2 test files and 8 tests passed.
+- Vite production build: passed; 16 modules transformed.
 
-## Remaining blockers
+The generated JavaScript bundle is 571.57 KB minified and 144.45 KB gzipped. Vite reports an advisory because the uncompressed chunk is above 500 KB. This is recorded as an optimisation task, not suppressed.
 
-1. Obtain a fresh CI result for the latest corrected commit and resolve any remaining failures.
-2. Confirm the generated package-lock.json is committed.
-3. Launch and inspect the game in a browser.
-4. Capture desktop and touch playtest evidence.
-5. Replace procedural character/environment blockouts with original production assets.
+## Not yet validated
+
+- Browser visual QA and recorded gameplay capture.
+- Touch-control usability on physical mobile hardware.
+- Desktop/mobile p50 and p95 frame-time measurements.
+- Memory behaviour during extended play.
+- Production asset loading and world streaming.
+
+The local authoring shell could not resolve GitHub, so browser QA was not possible from this session. GitHub's build runner did complete the automated engineering checks.
+
+## Remaining blockers for production
+
+1. Perform desktop and physical-mobile browser playtests.
+2. Profile and split the runtime bundle before substantial content is added.
+3. Replace procedural character/environment placeholders with original production assets.
+4. Implement a production combat/creature loop.
+5. Design server-authoritative persistence before online or valuable player state is introduced.
