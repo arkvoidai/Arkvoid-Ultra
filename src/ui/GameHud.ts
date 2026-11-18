@@ -83,7 +83,7 @@ export class GameHud {
 
   private bindControls(): void {
     document.querySelectorAll<HTMLButtonElement>('[data-control]').forEach((button) => {
-      const control = button.dataset.control as VirtualControl | undefined;
+      const control = button.dataset['control'] as VirtualControl | undefined;
       if (!control) return;
       const press = (event: PointerEvent): void => {
         event.preventDefault();
@@ -99,7 +99,7 @@ export class GameHud {
     });
 
     document.querySelectorAll<HTMLButtonElement>('[data-action]').forEach((button) => {
-      const action = button.dataset.action as GameAction | undefined;
+      const action = button.dataset['action'] as GameAction | undefined;
       if (!action) return;
       button.addEventListener('pointerdown', (event) => {
         event.preventDefault();

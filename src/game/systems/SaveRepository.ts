@@ -22,29 +22,31 @@ export class SaveRepository {
       if (typeof parsed !== 'object' || parsed === null) return null;
 
       const candidate = parsed as Record<string, unknown>;
+      const collectedMoteIds = candidate['collectedMoteIds'];
+
       if (
-        candidate.version !== 1 ||
-        !validNumber(candidate.qi) ||
-        !validNumber(candidate.spiritShards) ||
-        !validNumber(candidate.playerX) ||
-        !validNumber(candidate.playerZ) ||
-        typeof candidate.attunementComplete !== 'boolean' ||
-        typeof candidate.trainingTargetDefeated !== 'boolean' ||
-        !Array.isArray(candidate.collectedMoteIds) ||
-        !candidate.collectedMoteIds.every((item: unknown) => typeof item === 'string')
+        candidate['version'] !== 1 ||
+        !validNumber(candidate['qi']) ||
+        !validNumber(candidate['spiritShards']) ||
+        !validNumber(candidate['playerX']) ||
+        !validNumber(candidate['playerZ']) ||
+        typeof candidate['attunementComplete'] !== 'boolean' ||
+        typeof candidate['trainingTargetDefeated'] !== 'boolean' ||
+        !Array.isArray(collectedMoteIds) ||
+        !collectedMoteIds.every((item: unknown): item is string => typeof item === 'string')
       ) {
         return null;
       }
 
       return {
         version: 1,
-        qi: Math.max(0, Math.floor(candidate.qi)),
-        spiritShards: Math.max(0, Math.floor(candidate.spiritShards)),
-        playerX: candidate.playerX,
-        playerZ: candidate.playerZ,
-        attunementComplete: candidate.attunementComplete,
-        trainingTargetDefeated: candidate.trainingTargetDefeated,
-        collectedMoteIds: candidate.collectedMoteIds,
+        qi: Math.max(0, Math.floor(candidate['qi'])),
+        spiritShards: Math.max(0, Math.floor(candidate['spiritShards'])),
+        playerX: candidate['playerX'],
+        playerZ: candidate['playerZ'],
+        attunementComplete: candidate['attunementComplete'],
+        trainingTargetDefeated: candidate['trainingTargetDefeated'],
+        collectedMoteIds,
       };
     } catch {
       return null;
