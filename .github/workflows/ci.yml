@@ -49,6 +49,21 @@ jobs:
             git commit -m "chore: add deterministic npm dependency lockfile"
             git push origin "HEAD:$PR_HEAD_REF" || echo "::warning::Could not push generated lockfile; use the uploaded artifact."
           fi
+      - name: Apply canonical formatting to same-repository PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git fetch origin "$PR_HEAD_REF"
+          git checkout --detach FETCH_HEAD
+          npx prettier --write .
+          git add -u
+          if git diff --cached --quiet; then
+            echo "Repository formatting is already clean"
+          else
+            git commit -m "style: apply canonical Prettier formatting"
+            git push origin "HEAD:$PR_HEAD_REF"
+          fi
       - name: Preserve generated dependency lockfile
         if: always()
         uses: actions/upload-artifact@v4
